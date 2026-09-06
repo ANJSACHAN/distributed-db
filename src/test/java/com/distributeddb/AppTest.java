@@ -1,19 +1,35 @@
 package com.distributeddb;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import com.distributeddb.storage.KeyValueStore;
 import org.junit.jupiter.api.Test;
 
-/**
- * Unit test for simple App.
- */
+import static org.junit.jupiter.api.Assertions.*;
+
 public class AppTest {
 
-    /**
-     * Rigorous Test :-)
-     */
     @Test
-    public void shouldAnswerWithTrue() {
-        assertTrue(true);
+    void shouldStoreAndRetrieveValue() {
+        KeyValueStore store = new KeyValueStore();
+
+        store.put("name", "Anjali");
+
+        assertEquals("Anjali", store.get("name"));
+    }
+
+    @Test
+    void shouldReturnNullForMissingKey() {
+        KeyValueStore store = new KeyValueStore();
+
+        assertNull(store.get("name"));
+    }
+
+    @Test
+    void shouldDeleteValue() {
+        KeyValueStore store = new KeyValueStore();
+
+        store.put("name", "Anjali");
+        store.delete("name");
+
+        assertNull(store.get("name"));
     }
 }
